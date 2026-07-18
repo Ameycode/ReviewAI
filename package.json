@@ -1,6 +1,7 @@
 {
   "name": "reviewai",
   "version": "1.0.0",
+  "type": "module",
   "description": "AI-powered GitHub Pull Request Reviewer",
   "main": "src/index.js",
   "scripts": {

@@ -25,3 +25,5 @@ jobs:
 
       - name: Run ReviewAI
         run: npm start
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
