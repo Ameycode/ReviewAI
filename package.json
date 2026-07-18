@@ -8,5 +8,9 @@
     "test": "echo \"No tests yet\""
   },
   "author": "Amey",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^22.0.1",
+    "dotenv": "^17.4.2"
+  }
 }
