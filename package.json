@@ -1,0 +1,12 @@
+{
+  "name": "reviewai",
+  "version": "1.0.0",
+  "description": "AI-powered GitHub Pull Request Reviewer",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"No tests yet\""
+  },
+  "author": "Amey",
+  "license": "MIT"
+}
