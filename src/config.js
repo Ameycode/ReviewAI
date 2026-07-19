@@ -6,5 +6,5 @@ export const config = {
   eventPath: process.env.GITHUB_EVENT_PATH,
   geminiApiKey: process.env.GEMINI_API_KEY,
 
-    model: "models/gemini-2.5-pro-preview"
+    model: "models/gemini-2.5-pro"
 };
