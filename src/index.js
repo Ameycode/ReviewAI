@@ -3,7 +3,9 @@ import { config } from "./config.js";
 import { generateMarkdown } from "./formatter.js";
 import {
   createPullRequestComment,
+  getBotComment,
   getPullRequestFiles,
+  updateComment,
 } from "./github.js";
 import { reviewFiles } from "./reviewEngine.js";
 
@@ -19,7 +21,7 @@ const repo = event.repository.name;
 const pullNumber = pr.number;
 
 console.log("========================================");
-console.log("🤖 ReviewAI Started");
+console.log("  ReviewAI Started");
 console.log("========================================");
 
 console.log(`Repository : ${owner}/${repo}`);
@@ -44,7 +46,7 @@ if (files.length === 0) {
 
 console.log("\nStarting AI Review...\n");
 
-// Review all supported files
+// Review supported files
 const reviews = await reviewFiles(files);
 
 if (reviews.length === 0) {
@@ -57,18 +59,45 @@ console.log(`\nFinished reviewing ${reviews.length} file(s).`);
 // Generate markdown report
 const markdown = generateMarkdown(reviews);
 
-console.log("\nPosting review to Pull Request...");
+console.log("\nChecking for existing ReviewAI comment...");
 
-// Post comment
-await createPullRequestComment(
+// Check if ReviewAI has already commented
+const existingComment = await getBotComment(
   owner,
   repo,
-  pullNumber,
-  markdown
+  pullNumber
 );
 
-console.log("Review posted successfully.");
+if (existingComment) {
+  console.log(
+    `Existing ReviewAI comment found (ID: ${existingComment.id}).`
+  );
+
+  console.log("Updating existing comment...");
+
+  await updateComment(
+    owner,
+    repo,
+    existingComment.id,
+    markdown
+  );
+
+  console.log("Review updated successfully.");
+} else {
+  console.log("No existing ReviewAI comment found.");
+
+  console.log("Creating new comment...");
+
+  await createPullRequestComment(
+    owner,
+    repo,
+    pullNumber,
+    markdown
+  );
+
+  console.log("Review posted successfully.");
+}
 
 console.log("========================================");
-console.log("          ReviewAI Completed            ");
-console.log("========================================"); 
+console.log("   ReviewAI Completed");
+console.log("========================================");

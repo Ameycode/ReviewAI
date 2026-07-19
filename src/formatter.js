@@ -1,14 +1,16 @@
 export function generateMarkdown(reviews) {
 
-  let markdown =
-`# ReviewAI Report
+  let markdown = `
+<!-- REVIEWAI_COMMENT -->
+
+# ReviewAI Report
 
 `;
 
   for (const review of reviews) {
 
-    markdown +=
-`---
+    markdown += `
+---
 
 ## ${review.file}
 
@@ -17,8 +19,8 @@ ${review.review}
 `;
   }
 
-  markdown +=
-`---
+  markdown += `
+---
 
 Generated automatically by ReviewAI.
 `;
