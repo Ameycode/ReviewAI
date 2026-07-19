@@ -5,9 +5,6 @@ export const octokit = new Octokit({
   auth: config.githubToken,
 });
 
-/**
- * Get all files changed in a Pull Request
- */
 export async function getPullRequestFiles(owner, repo, pullNumber) {
   const response = await octokit.rest.pulls.listFiles({
     owner,
@@ -16,4 +13,18 @@ export async function getPullRequestFiles(owner, repo, pullNumber) {
   });
 
   return response.data;
+}
+
+export async function createPullRequestComment(
+  owner,
+  repo,
+  pullNumber,
+  body
+) {
+  await octokit.rest.issues.createComment({
+    owner,
+    repo,
+    issue_number: pullNumber,
+    body,
+  });
 }
