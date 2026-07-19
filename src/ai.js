@@ -6,9 +6,9 @@ const ai = new GoogleGenAI({
 
 export async function askAI(prompt) {
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.5-flash-lite",
     contents: prompt,
-  });
+});
 
   return response.text;
 }
