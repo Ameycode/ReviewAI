@@ -6,5 +6,5 @@ export const config = {
   eventPath: process.env.GITHUB_EVENT_PATH,
   geminiApiKey: process.env.GEMINI_API_KEY,
 
-    model: "openai/gpt-5-mini"
+    model: "anthropic/claude-sonnet-4"
 };

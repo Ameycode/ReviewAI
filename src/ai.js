@@ -12,7 +12,7 @@ const client = new OpenAI({
 
 export async function askAI(prompt) {
   const response = await client.chat.completions.create({
-    model: "openai/gpt-5-mini",
+    model: "anthropic/claude-sonnet-4",
     messages: [
       {
         role: "system",
