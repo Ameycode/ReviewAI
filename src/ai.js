@@ -12,7 +12,7 @@ const client = new OpenAI({
 
 export async function askAI(prompt) {
   const response = await client.chat.completions.create({
-    model: "google/gemini-2.5-flash",
+    model: "openai/gpt-5-mini",
     messages: [
       {
         role: "system",
