@@ -12,7 +12,7 @@ const client = new OpenAI({
 
 export async function askAI(prompt) {
   const response = await client.chat.completions.create({
-    model: "anthropic/claude-sonnet-4",
+    model: "google/gemini-3.5-flash",
     messages: [
       {
         role: "system",

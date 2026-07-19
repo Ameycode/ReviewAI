@@ -6,5 +6,5 @@ export const config = {
   eventPath: process.env.GITHUB_EVENT_PATH,
   geminiApiKey: process.env.GEMINI_API_KEY,
 
-    model: "anthropic/claude-sonnet-4"
+    model: "google/gemini-3.5-flash"
 };
