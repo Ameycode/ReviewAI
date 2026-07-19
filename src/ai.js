@@ -24,7 +24,8 @@ export async function askAI(prompt) {
         content: prompt
       }
     ],
-    temperature: 0.2
+    temperature: 0.2,
+    max_tokens: 800
   });
 
   return response.choices[0].message.content;
