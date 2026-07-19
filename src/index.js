@@ -1,12 +1,11 @@
 import fs from "fs";
 import { config } from "./config.js";
+import { generateMarkdown } from "./formatter.js";
 import {
-  getPullRequestFiles,
   createPullRequestComment,
+  getPullRequestFiles,
 } from "./github.js";
-import { buildPrompt } from "./prompt.js";
-import { askAI } from "./ai.js";
-import { formatReview } from "./review.js";
+import { reviewFiles } from "./reviewEngine.js";
 
 // Read GitHub event payload
 const event = JSON.parse(
@@ -19,47 +18,57 @@ const owner = event.repository.owner.login;
 const repo = event.repository.name;
 const pullNumber = pr.number;
 
+console.log("========================================");
+console.log("🤖 ReviewAI Started");
+console.log("========================================");
+
 console.log(`Repository : ${owner}/${repo}`);
 console.log(`PR Number  : ${pullNumber}`);
+console.log(`PR Title   : ${pr.title}`);
+console.log(`Author     : ${pr.user.login}`);
+console.log("----------------------------------------");
 
-// Get all changed files
+// Fetch changed files
 const files = await getPullRequestFiles(
   owner,
   repo,
   pullNumber
 );
 
-console.log(`Found ${files.length} changed file(s).\n`);
+console.log(`Found ${files.length} changed file(s).`);
 
 if (files.length === 0) {
   console.log("No changed files found.");
   process.exit(0);
 }
 
-// Review only the first file (for now)
-const file = files[0];
+console.log("\nStarting AI Review...\n");
 
-console.log(`Reviewing file: ${file.filename}`);
+// Review all supported files
+const reviews = await reviewFiles(files);
 
-const prompt = buildPrompt(file);
+if (reviews.length === 0) {
+  console.log("No supported files found for review.");
+  process.exit(0);
+}
 
-console.log("Sending code to Gemini...\n");
+console.log(`\nFinished reviewing ${reviews.length} file(s).`);
 
-const review = await askAI(prompt);
+// Generate markdown report
+const markdown = generateMarkdown(reviews);
 
-console.log("========== AI Review ==========\n");
-console.log(review);
-console.log("\n===============================\n");
+console.log("\nPosting review to Pull Request...");
 
-// Format the review into Markdown
-const formattedReview = formatReview(review);
-
-// Post the review as a PR comment
+// Post comment
 await createPullRequestComment(
   owner,
   repo,
   pullNumber,
-  formattedReview
+  markdown
 );
 
 console.log("Review posted successfully.");
+
+console.log("========================================");
+console.log("          ReviewAI Completed            ");
+console.log("========================================"); 
