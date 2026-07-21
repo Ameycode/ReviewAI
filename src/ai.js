@@ -12,7 +12,7 @@ const client = new OpenAI({
 
 export async function askAI(prompt) {
   const response = await client.chat.completions.create({
-    model: "anthropic/claude-sonnet-4",
+    model: "nvidia/nemotron-nano-12b-v2-vl:free",
     messages: [
       {
         role: "system",
