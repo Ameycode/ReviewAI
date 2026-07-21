@@ -1,38 +1,37 @@
-export function buildPrompt(file) {
-  return `
-You are an experienced Senior Software Engineer reviewing a GitHub Pull Request.
+export function buildBatchPrompt(files) {
 
-Review ONLY the code diff provided below.
+  let prompt = `
+You are an experienced Senior Software Engineer.
 
-For every issue you find, provide:
+Review the following GitHub Pull Request.
 
-- Category
-- Severity (Critical, High, Medium, Low)
-- Explanation
-- Suggested Fix
+For each file provide:
 
-Organize the review using these sections:
+- Summary
+- Bugs
+- Security
+- Performance
+- Readability
+- Best Practices
 
-## Bugs
+Respond in Markdown.
 
-## Security
-
-## Performance
-
-## Readability
-
-## Best Practices
-
-## Overall Summary
-
-If there are no issues in a section, write:
-
-"No issues found."
-
-Changed File:
-${file.filename}
-
-Git Diff:
-${file.patch}
 `;
+
+  for (const file of files) {
+
+    prompt += `
+
+==========================
+
+FILE: ${file.filename}
+
+DIFF:
+
+${file.patch}
+
+`;
+  }
+
+  return prompt;
 }

@@ -1,29 +1,30 @@
 export function generateMarkdown(reviews) {
 
-  let markdown = `
+let markdown = `
 <!-- REVIEWAI_COMMENT -->
 
-# ReviewAI Report
+# ReviewAI
 
 `;
 
-  for (const review of reviews) {
+for(const review of reviews){
 
-    markdown += `
+markdown +=`
+
+${review}
+
 ---
 
-## ${review.file}
-
-${review.review}
-
-`;
-  }
-
-  markdown += `
----
-
-Generated automatically by ReviewAI.
 `;
 
-  return markdown;
+}
+
+markdown +=`
+
+Generated using OpenRouter.
+
+`;
+
+return markdown;
+
 }
