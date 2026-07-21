@@ -12,7 +12,7 @@ const client = new OpenAI({
 
 export async function askAI(prompt) {
   const response = await client.chat.completions.create({
-    model: "deepseek/deepseek-r1-0528:free",
+    model: "google/gemma-3-27b-it:free",
     messages: [
       {
         role: "system",

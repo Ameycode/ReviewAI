@@ -6,5 +6,5 @@ export const config = {
   eventPath: process.env.GITHUB_EVENT_PATH,
   geminiApiKey: process.env.GEMINI_API_KEY,
 
-    model: "deepseek/deepseek-r1-0528:free"
+    model: "google/gemma-3-27b-it:free"
 };
