@@ -11,7 +11,7 @@ export async function reviewFiles(files) {
   console.log(`Supported files: ${filteredFiles.length}`);
 
   // Create batches
-  const batches = createBatches(filteredFiles, 5);
+  const batches = createBatches(filteredFiles, 2);
 
   console.log(`Created ${batches.length} batch(es)`);
 
