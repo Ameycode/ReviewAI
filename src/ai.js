@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+/*import OpenAI from "openai";
 import { config } from "./config.js";
 
 const client = new OpenAI({
@@ -61,4 +61,32 @@ export async function askAI(prompt) {
 
     throw error;
   }
+}*/
+export async function askAI(prompt) {
+  console.log("Mock AI review generated.");
+
+  return `
+## Summary
+The code structure looks good.
+
+## Bugs
+- No obvious bugs detected.
+
+## Security
+- No major security issues found.
+
+## Performance
+- Consider optimizing repeated operations.
+
+## Readability
+- Variable names are clear.
+
+## Best Practices
+- Add more comments where business logic is complex.
+
+## Overall Rating
+⭐⭐⭐⭐☆ (4/5)
+
+> Mock response generated because AI provider is disabled.
+`;
 }

@@ -1,40 +1,39 @@
-const ignoredExtensions = [
-  ".png",
-  ".jpg",
-  ".jpeg",
-  ".gif",
-  ".svg",
-  ".ico",
-  ".lock",
-  ".pdf",
-  ".zip",
-  ".exe"
-];
-
-const ignoredFolders = [
-  "node_modules/",
-  "dist/",
-  "build/",
-  ".next/",
-  "coverage/"
-];
+import {
+  IGNORED_DIRECTORIES,
+  IGNORED_EXTENSIONS,
+  IGNORED_FILES,
+  MAX_PATCH_LENGTH
+} from "./constants.js";
 
 export function shouldReview(file) {
 
   if (!file.patch)
     return false;
 
+  if (IGNORED_FILES.includes(file.filename))
+    return false;
+
   if (
-    ignoredFolders.some(folder =>
-      file.filename.startsWith(folder)
+    IGNORED_DIRECTORIES.some(dir =>
+      file.filename.startsWith(dir)
     )
   )
     return false;
 
   if (
-    ignoredExtensions.some(ext =>
+    IGNORED_EXTENSIONS.some(ext =>
       file.filename.endsWith(ext)
     )
+  )
+    return false;
+
+  if (
+    file.filename.endsWith(".min.js")
+  )
+    return false;
+
+  if (
+    file.patch.length > MAX_PATCH_LENGTH
   )
     return false;
 

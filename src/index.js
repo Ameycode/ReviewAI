@@ -7,6 +7,8 @@ import {
   getPullRequestFiles,
   updateComment,
 } from "./github.js";
+import { printMetrics } from "./logger.js";
+import { Metrics } from "./metrics.js";
 import { reviewFiles } from "./reviewEngine.js";
 
 // Read GitHub event payload
@@ -20,8 +22,11 @@ const owner = event.repository.owner.login;
 const repo = event.repository.name;
 const pullNumber = pr.number;
 
+// Create metrics
+const metrics = new Metrics();
+
 console.log("========================================");
-console.log("  ReviewAI Started");
+console.log("ReviewAI Started");
 console.log("========================================");
 
 console.log(`Repository : ${owner}/${repo}`);
@@ -46,22 +51,24 @@ if (files.length === 0) {
 
 console.log("\nStarting AI Review...\n");
 
-// Review supported files
-const reviews = await reviewFiles(files);
+// Review files
+const reviews = await reviewFiles(files, metrics);
+
+metrics.finish();
 
 if (reviews.length === 0) {
   console.log("No supported files found for review.");
+  printMetrics(metrics);
   process.exit(0);
 }
 
-console.log(`\nFinished reviewing ${reviews.length} file(s).`);
+console.log(`\nFinished reviewing ${reviews.length} batch(es).`);
 
 // Generate markdown report
 const markdown = generateMarkdown(reviews);
 
 console.log("\nChecking for existing ReviewAI comment...");
 
-// Check if ReviewAI has already commented
 const existingComment = await getBotComment(
   owner,
   repo,
@@ -98,6 +105,8 @@ if (existingComment) {
   console.log("Review posted successfully.");
 }
 
+printMetrics(metrics);
+
 console.log("========================================");
-console.log("   ReviewAI Completed");
+console.log("ReviewAI Completed");
 console.log("========================================");
