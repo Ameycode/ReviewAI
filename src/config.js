@@ -6,5 +6,5 @@ export const config = {
   eventPath: process.env.GITHUB_EVENT_PATH,
   geminiApiKey: process.env.GEMINI_API_KEY,
 
-    model: "x-ai/grok-4.5"
+    model: "qwen/qwen3-coder:free"
 };
