@@ -1,4 +1,5 @@
 import fs from "fs";
+import { saveReport } from "./artifact.js";
 import { config } from "./config.js";
 import { generateMarkdown } from "./formatter.js";
 import {
@@ -10,6 +11,7 @@ import {
 import { printMetrics } from "./logger.js";
 import { Metrics } from "./metrics.js";
 import { reviewFiles } from "./reviewEngine.js";
+
 
 // Read GitHub event payload
 const event = JSON.parse(
