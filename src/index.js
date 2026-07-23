@@ -66,7 +66,7 @@ console.log(`\nFinished reviewing ${reviews.length} batch(es).`);
 
 // Generate markdown report
 const markdown = generateMarkdown(reviews);
-
+saveReport(markdown);
 console.log("\nChecking for existing ReviewAI comment...");
 
 const existingComment = await getBotComment(
