@@ -1,4 +1,4 @@
-/*import OpenAI from "openai";
+import OpenAI from "openai";
 import { config } from "./config.js";
 
 const client = new OpenAI({
@@ -61,7 +61,8 @@ export async function askAI(prompt) {
 
     throw error;
   }
-}*/
+}
+/*
 export async function askAI(prompt) {
   console.log("Mock AI review generated.");
 
@@ -89,4 +90,4 @@ The code structure looks good.
 
 > Mock response generated because AI provider is disabled.
 `;
-}
+}*/
